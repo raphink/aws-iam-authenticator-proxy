@@ -52,6 +52,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	clusterID = os.Getenv("EKS_CLUSTER_ID")
+	clusterID = values.Get("cluster_id")
+	if clusterID == "" {
+		log.Fatal("EKS_CLUSTER_ID must be set")
+	}
+
 	tok, err = gen.Get(clusterID)
 	if err != nil {
 		metrics["aws_iam_authenticator_proxy:tokens:total_errors"].Value += 1
@@ -80,11 +86,6 @@ func init() {
 	gen, err = token.NewGenerator(false, false)
 	if err != nil {
 		log.Fatalf("Failed to start service: %v", err)
-	}
-
-	clusterID = os.Getenv("EKS_CLUSTER_ID")
-	if clusterID == "" {
-		log.Fatal("EKS_CLUSTER_ID must be set")
 	}
 
 	psk = os.Getenv("PSK")
