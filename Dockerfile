@@ -4,7 +4,6 @@ COPY . .
 RUN make build
 
 
-FROM scratch
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+FROM busybox
 COPY --from=builder /aws-iam-authenticator-proxy /aws-iam-authenticator-proxy
 ENTRYPOINT ["/aws-iam-authenticator-proxy"]
