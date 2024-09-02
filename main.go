@@ -55,7 +55,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	clusterID = os.Getenv("EKS_CLUSTER_ID")
 	clusterID = values.Get("cluster_id")
 	if clusterID == "" {
-		log.Fatal("EKS_CLUSTER_ID must be set")
+		http.Error(w, "cluster-id must be set", http.StatusNotFound)
+		return
 	}
 
 	tok, err = gen.Get(clusterID)
