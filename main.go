@@ -93,7 +93,7 @@ func init() {
 		log.Fatalf("Failed to start service: %v", err)
 	}
 
-	psk = os.Getenv("PSK")
+	psk = os.Getenv("AWS_IAM_AUTHENTICATOR_PROXY_PSK")
 }
 
 func main() {
