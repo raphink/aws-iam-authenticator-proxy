@@ -52,10 +52,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	clusterID = os.Getenv("EKS_CLUSTER_ID")
 	clusterID = values.Get("cluster_id")
 	if clusterID == "" {
-		http.Error(w, "cluster-id must be set", http.StatusNotFound)
+		clusterID = os.Getenv("EKS_CLUSTER_ID")
+	}
+
+	if clusterID == "" {
+		metrics["aws_iam_authenticator_proxy:tokens:total_errors"].Value += 1
+		http.Error(w, "cluster_id param or EKS_CLUSTER_ID environment variable must be set", http.StatusNotFound)
 		return
 	}
 
