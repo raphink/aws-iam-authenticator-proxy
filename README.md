@@ -23,7 +23,7 @@ $ docker run --rm -p 8080:8080 \
              -e AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID> \
              -e AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY> \
              -e EKS_CLUSTER_ID=<EKS_CLUSTER_ID> \
-             -e PSK="mysecretstring" \
+             -e AWS_IAM_AUTHENTICATOR_PROXY_PSK="mysecretstring" \
     camptocamp/aws-iam-authenticator-proxy:latest
 ```
 
